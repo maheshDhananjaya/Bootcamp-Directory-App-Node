@@ -32,6 +32,7 @@ exports.getBootcampById = async (req, res, next) => {
         // res.status(500).json({status: 'error', error: err});
     }
 }
+
 exports.createBootcamp = async (req, res, next) => {
     try {
         const bootcamp = await Bootcamp.create(req.body);
