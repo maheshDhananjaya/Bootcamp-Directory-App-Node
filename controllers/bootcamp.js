@@ -26,13 +26,29 @@ exports.getAllBootcamps = async (req, res) => {
         }
         //pagination
         const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 2;
-        const skip = (page - 1) * limit;
+        const limit = parseInt(req.query.limit) || 10;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const total = await Bootcamp.countDocuments();
 
-        query = query.skip(skip).limit(limit);
+        query = query.skip(startIndex).limit(limit);
         // execute query
         const bootcamps = await query;
-        res.status(200).json({status: "success", count: bootcamps.length, data: bootcamps});
+
+        const pagination = {}
+        if( endIndex<total){
+            pagination.nextPage={
+                page : page+1,
+                limit : limit,
+            }
+        }
+        if(startIndex > 0){
+            pagination.prevPage={
+                page : page-1,
+                limit : limit,
+            }
+        }
+        res.status(200).json({status: "success", count: bootcamps.length, pagination, data: bootcamps});
     } catch (err) {
         console.log(err);
         res.status(500).json({status: "error", message: err.message});
