@@ -3,6 +3,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const geocoder = require("../utils/geocoder");
 
 exports.getAllBootcamps = async (req, res) => {
+    console.log(req.query);
     try {
         let query;
         const reqQuery = {...req.query};
