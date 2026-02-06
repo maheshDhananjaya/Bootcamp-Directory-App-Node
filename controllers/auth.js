@@ -28,5 +28,5 @@ exports.login = async(req, res) => {
         return res.status(401).send({message: "passwords does not match"});
     }
     const token = user.getSignedJwtToken()
-    res.status(200).json({ success: true, message: "User found", token });
+    res.status(200).json({ success: true, message: "login success", token });
 }
