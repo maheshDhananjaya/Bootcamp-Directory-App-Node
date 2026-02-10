@@ -36,6 +36,11 @@ exports.getBootcampById = async (req, res, next) => {
 
 exports.createBootcamp = async (req, res, next) => {
   try {
+      req.body.user = req.user.id;
+      const publishedBootcamp = await Bootcamp.findOne({user:req.user.id});
+      if (publishedBootcamp && req.user.role !=="admin") {
+          return res.status(400).json({ status: "error", message: `Bootcamp already exists with this user id ${req.user.id}` });
+      }
     const bootcamp = await Bootcamp.create(req.body);
     console.log(bootcamp);
     res.status(200).json({ status: true, data: bootcamp });

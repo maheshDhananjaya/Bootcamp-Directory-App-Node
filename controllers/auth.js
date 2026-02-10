@@ -8,10 +8,10 @@ exports.register = async(req, res) => {
         password,
         role
     })
-
-    const token = user.getSignedJwtToken()
-
-  res.status(200).json({ success: true, message: "User registered", token });
+  //
+  //   const token = user.getSignedJwtToken()
+  // res.status(200).json({ success: true, message: "User registered", token });
+    sendTokenResponse(user,200,res)
 };
 
 exports.login = async(req, res) => {
@@ -27,6 +27,25 @@ exports.login = async(req, res) => {
     if(!isPasswordMatch){
         return res.status(401).send({message: "passwords does not match"});
     }
+    // const token = user.getSignedJwtToken()
+    // res.status(200).json({ success: true, message: "login is success", token });
+    sendTokenResponse(user,200,res)
+}
+
+exports.getUser = async(req, res) => {
+    const user  = await User.findById(req.user.id);
+    if(!user){
+        return res.status(401).send({message: "user not found"});
+    }
+    return res.status(200).send({success:true, data:user});
+}
+
+const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken()
-    res.status(200).json({ success: true, message: "login is success", token });
+    const options = {
+expiresIn: new Date(Date.now() + 30*24*3600 * 1000),
+        httpOnly: true,
+    }
+    res.status(statusCode).cookie("token", token, options).json({success: true, token: token});
+
 }

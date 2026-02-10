@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const logger = require("./middleware/logger");
 const connectDB = require("./config/db");
 const fileUpload = require("express-fileupload");
@@ -16,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cookieParser())
 // app.use(logger)
 app.use("/api/v1/bootcamps", bootcamp);
 app.use("/api/v1/courses", courses);
