@@ -109,6 +109,7 @@ exports.restPassword = async(req, res) => {
     }
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
     await user.save();
 
     sendTokenResponse(user,200,res);

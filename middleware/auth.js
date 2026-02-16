@@ -26,7 +26,7 @@ exports.protect = async (req, res,next) => {
 exports.authorize = (roles)=>{
     return (req, res, next) => {
         if(!roles.includes(req.user.role)){
-            return res.status(401).send(`the role ${req.user.role} is not authorized`)
+            return res.status(401).json({success:false,message:`the role ${req.user.role} is not authorized`});
         }
         next();
     }
