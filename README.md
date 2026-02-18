@@ -1,7 +1,7 @@
 # Bootcamp-Directory-App-Node
-
+ - update config/config.env
+   
 ```aiignore
-update config/config.env 
 npm install
-To run : npm run start
+npm run start
 ```
