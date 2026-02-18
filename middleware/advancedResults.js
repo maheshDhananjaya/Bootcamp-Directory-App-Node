@@ -1,4 +1,4 @@
-const addvancedResults = (model, populate) => async (req, res, next) => {
+const advancedResults = (model, populate) => async (req, res, next) => {
   let query;
   // Copy req.query
   const reqQuery = { ...req.query };
@@ -64,4 +64,4 @@ const addvancedResults = (model, populate) => async (req, res, next) => {
   // Call next middleware
   next();
 };
-module.exports = addvancedResults;
+module.exports = advancedResults;
