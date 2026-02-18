@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
         error = new ErrorResponse(message,404);
     }
     if(err.code === 11000){
-        const message = `Bootcamp already exists with name ${err.keyValue.name}`;
+        const message = `resource already exists`;
         error = new ErrorResponse(message,400);
     }
     if(err.name === "ValidationError"){

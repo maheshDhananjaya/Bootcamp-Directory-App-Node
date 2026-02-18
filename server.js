@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const mongoSanitize = require('express-mongo-sanitize');
 const cookieParser = require("cookie-parser");
 const logger = require("./middleware/logger");
 const connectDB = require("./config/db");
@@ -12,18 +13,25 @@ const bootcamp = require("./routes/bootcamp");
 const courses = require("./routes/courses");
 const auth = require("./routes/auth");
 const user = require("./routes/user");
+const review = require("./routes/review");
 const errorHandler = require("./middleware/error");
 
 const app = express();
 app.use(express.json());
+
+
+// app.use(mongoSanitize());
+
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname, "public")));
+
 app.use(cookieParser())
 // app.use(logger)
 app.use("/api/v1/bootcamps", bootcamp);
 app.use("/api/v1/courses", courses);
 app.use("/api/v1/auth", auth);
-app.use("/api/v1/users", user)
+app.use("/api/v1/users", user);
+app.use("/api/v1/review", review);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5002;

@@ -14,10 +14,12 @@ const advancedResults = require("../middleware/advancedResults");
 const {protect,authorize} = require("../middleware/auth");
 
 const courseRouter = require("./courses");
+const reviewRouter = require("./review");
 
 const router = express.Router();
 
 router.use("/:bootcampId/courses", courseRouter);
+router.use("/:bootcampId/reviews", reviewRouter);
 
 router.route("/").get(advancedResults(Bootcamp, "courses"), getAllBootcamps);
 router.route("/").post(protect,createBootcamp);
